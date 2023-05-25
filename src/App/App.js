@@ -25,7 +25,10 @@ function App() {
   };
   const handleAddTodo = () => {
     if (value !== "") {
-      setTodoList([{ todo: value, id: id.current }, ...todoList]);
+      setTodoList([
+        { todo: value, id: id.current, isDone: false },
+        ...todoList,
+      ]);
       setValue("");
       id.current++;
     }
@@ -47,6 +50,17 @@ function App() {
       setTodoList(todoList.filter((todo) => todoID !== todo.id));
     }
   };
+  const handleTodoIsDone = (todoID) => {
+    //反轉 todoList 裡 id 對應 的 todo 項目的 isDone 變數
+    setTodoList(
+      todoList.filter((todo) => {
+        if (todo.id === todoID) {
+          todo.isDone = !todo.isDone;
+        }
+        return todo;
+      })
+    );
+  };
   return (
     <Container>
       <TodoListWrapper>
@@ -63,7 +77,7 @@ function App() {
         <hr />
         <section>
           {todoList.length > 0 &&
-            todoList.map(({ todo, id }) => (
+            todoList.map(({ todo, id, isDone }) => (
               <section key={id}>
                 <div>{todo}</div>
                 <div>
@@ -73,6 +87,13 @@ function App() {
                     onClick={(e) => {
                       e.preventDefault();
                       handleDeleteOne(id);
+                    }}
+                  />
+                  <input
+                    type="button"
+                    value={isDone ? "未完成" : "已完成"}
+                    onClick={() => {
+                      handleTodoIsDone(id);
                     }}
                   />
                 </div>
