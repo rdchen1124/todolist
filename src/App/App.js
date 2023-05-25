@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 const Container = styled.div`
   background-color: #ededed;
@@ -18,8 +18,17 @@ const TodoListWrapper = styled.div`
 `;
 function App() {
   const [value, setValue] = useState("");
-  const handleTodoChange = (todo) => {
-    setValue(todo);
+  const [todoList, setTodoList] = useState([]);
+  const id = useRef(1);
+  const handleTodoChange = (e) => {
+    setValue(e.target.value);
+  };
+  const handleAddTodo = () => {
+    if (value !== "") {
+      setTodoList([{ todo: value, id: id.current }, ...todoList]);
+      setValue("");
+      id.current++;
+    }
   };
   return (
     <Container>
@@ -28,18 +37,16 @@ function App() {
           <h1>Todo List in React</h1>
         </header>
         <section>
-          <input
-            type="text"
-            onChange={(e) => {
-              handleTodoChange(e.target.value);
-            }}
-          />
-          <input type="button" value="addTodo" />
+          <input type="text" value={value} onChange={handleTodoChange} />
+          <input type="button" value="addTodo" onClick={handleAddTodo} />
           {/* todo form */}
         </section>
         <section>{/* filter */}</section>
         <hr />
-        <section>{/* todo items */}</section>
+        <section>
+          {todoList.length > 0 &&
+            todoList.map(({ todo, id }) => <div key={id}>{todo}</div>)}
+        </section>
       </TodoListWrapper>
     </Container>
   );
