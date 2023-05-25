@@ -30,6 +30,13 @@ function App() {
       id.current++;
     }
   };
+  const handleDeleteAll = () => {
+    //清除 todoList 為 [], 並且重置 id 為 1
+    if (todoList.length > 0) {
+      setTodoList([]);
+      id.current = 1;
+    }
+  };
   return (
     <Container>
       <TodoListWrapper>
@@ -39,6 +46,7 @@ function App() {
         <section>
           <input type="text" value={value} onChange={handleTodoChange} />
           <input type="button" value="addTodo" onClick={handleAddTodo} />
+          <input type="button" value="deleteAll" onClick={handleDeleteAll} />
           {/* todo form */}
         </section>
         <section>{/* filter */}</section>
