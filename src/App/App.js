@@ -84,8 +84,7 @@ function App() {
                   <input
                     type="button"
                     value="刪除"
-                    onClick={(e) => {
-                      e.preventDefault();
+                    onClick={() => {
                       handleDeleteOne(id);
                     }}
                   />
