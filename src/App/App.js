@@ -1,5 +1,10 @@
 import styled from "@emotion/styled";
 import { useState, useRef, useContext, createContext } from "react";
+const theme = {
+  color_blue: "#008cba",
+  color_red: "#f44336",
+  color_gray: "rgba(0, 0, 0, 0.3)",
+};
 
 const Container = styled.div`
   background-color: #ededed;
@@ -20,9 +25,58 @@ const TodoListWrapper = styled.div`
 const Header = styled.div`
   font-size: 2rem;
   font-weight: bold;
-  color: #008cba;
+  color: ${theme.color_blue};
   margin: 1rem auto;
   text-align: center;
+`;
+
+const TodoForm = styled.div`
+  border: 1px solid red;
+  padding: 1rem;
+  display: inline-flex;
+`;
+
+const TodoFormInput = styled.input`
+  font-size: 1.2rem;
+  padding: 0.3rem 0.6rem;
+  margin-right: 1rem;
+  display: inline-flex;
+`;
+
+const CompleteButton = styled.button`
+  background-color: ${theme.color_blue};
+  padding: 0.3rem 0.6rem;
+  display: inline-block;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  ${(props) => props.isDone && `background-color: ${theme.color_red}`}
+`;
+
+const DeleteButton = styled(CompleteButton)`
+  margin-left: 10px;
+  background-color: ${theme.color_red};
+`;
+
+const OutlineAddButton = styled(CompleteButton)`
+  background-color: white;
+  color: black;
+  border: 1px solid ${theme.color_blue};
+  transition: all 0.3s ease;
+  &:hover {
+    background-color: ${theme.color_blue};
+    color: white;
+  }
+`;
+
+const OutlineDeleteButton = styled(OutlineAddButton)`
+  margin-left: 10px;
+  border: 1px solid ${theme.color_red};
+  &:hover {
+    background-color: ${theme.color_red};
+  }
 `;
 
 const FilterItem = styled.div`
@@ -109,12 +163,18 @@ function App() {
     <Container>
       <TodoListWrapper>
         <Header>Todo List in React</Header>
-        <section>
-          <input type="text" value={value} onChange={handleTodoChange} />
-          <input type="button" value="addTodo" onClick={handleAddTodo} />
-          <input type="button" value="deleteAll" onClick={handleDeleteAll} />
+        <TodoForm>
+          <TodoFormInput
+            type="text"
+            value={value}
+            onChange={handleTodoChange}
+          />
+          <OutlineAddButton onClick={handleAddTodo}>addTodo</OutlineAddButton>
+          <OutlineDeleteButton onClick={handleDeleteAll}>
+            deleteAll
+          </OutlineDeleteButton>
           {/* todo form */}
-        </section>
+        </TodoForm>
         <section>
           <FilterContext.Provider value={{ filter, setFilter }}>
             <Filter filter_name="all" />
