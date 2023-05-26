@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { useState, useRef } from "react";
+import { useState, useRef, useContext, createContext } from "react";
 
 const Container = styled.div`
   background-color: #ededed;
@@ -16,6 +16,32 @@ const TodoListWrapper = styled.div`
   padding: 30px 15px;
   background-color: white;
 `;
+
+const FilterItem = styled.div`
+  padding: 1rem 2rem;
+  border: ${(props) => (props.$active ? "1px solid salmon" : "")};
+  color: black;
+  &:hover {
+    color: red;
+  }
+`;
+
+const FilterContext = createContext(null);
+
+const Filter = ({ filter_name }) => {
+  const { filter, setFilter } = useContext(FilterContext);
+  return (
+    <FilterItem
+      $active={filter_name === filter}
+      onClick={() => {
+        setFilter(filter_name);
+      }}
+    >
+      {filter_name}
+    </FilterItem>
+  );
+};
+
 function App() {
   const [value, setValue] = useState("");
   const [todoList, setTodoList] = useState([]);
@@ -84,9 +110,11 @@ function App() {
           {/* todo form */}
         </section>
         <section>
-          <div>all</div>
-          <div>completed</div>
-          <div>uncompleted</div>
+          <FilterContext.Provider value={{ filter, setFilter }}>
+            <Filter filter_name="all" />
+            <Filter filter_name="completed" />
+            <Filter filter_name="uncompleted" />
+          </FilterContext.Provider>
           {/* filter */}
         </section>
         <hr />
