@@ -90,12 +90,12 @@ function App() {
   };
   const filteredTodoList = () => {
     if (filter === "completed") {
-      todoList.filter((todo) => todo.isDone === true);
+      return todoList.filter((todo) => todo.isDone === true);
+    } else if (filter === "uncompleted") {
+      return todoList.filter((todo) => todo.isDone === false);
+    } else {
+      return todoList;
     }
-    if (filter === "uncompleted") {
-      todoList.filter((todo) => todo.isDone === false);
-    }
-    return todoList;
   };
   return (
     <Container>
