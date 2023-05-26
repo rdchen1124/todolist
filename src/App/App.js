@@ -19,6 +19,7 @@ const TodoListWrapper = styled.div`
 function App() {
   const [value, setValue] = useState("");
   const [todoList, setTodoList] = useState([]);
+  const [filter, setFilter] = useState("all");
   const id = useRef(1);
   const handleTodoChange = (e) => {
     setValue(e.target.value);
@@ -61,6 +62,15 @@ function App() {
       })
     );
   };
+  const filteredTodoList = () => {
+    if (filter === "completed") {
+      todoList.filter((todo) => todo.isDone === true);
+    }
+    if (filter === "uncompleted") {
+      todoList.filter((todo) => todo.isDone === false);
+    }
+    return todoList;
+  };
   return (
     <Container>
       <TodoListWrapper>
@@ -73,11 +83,16 @@ function App() {
           <input type="button" value="deleteAll" onClick={handleDeleteAll} />
           {/* todo form */}
         </section>
-        <section>{/* filter */}</section>
+        <section>
+          <div>all</div>
+          <div>completed</div>
+          <div>uncompleted</div>
+          {/* filter */}
+        </section>
         <hr />
         <section>
           {todoList.length > 0 &&
-            todoList.map(({ todo, id, isDone }) => (
+            filteredTodoList().map(({ todo, id, isDone }) => (
               <section key={id}>
                 <div>{todo}</div>
                 <div>
