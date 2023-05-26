@@ -17,6 +17,14 @@ const TodoListWrapper = styled.div`
   background-color: white;
 `;
 
+const Header = styled.div`
+  font-size: 2rem;
+  font-weight: bold;
+  color: #008cba;
+  margin: 1rem auto;
+  text-align: center;
+`;
+
 const FilterItem = styled.div`
   padding: 1rem 2rem;
   border: ${(props) => (props.$active ? "1px solid salmon" : "")};
@@ -100,9 +108,7 @@ function App() {
   return (
     <Container>
       <TodoListWrapper>
-        <header>
-          <h1>Todo List in React</h1>
-        </header>
+        <Header>Todo List in React</Header>
         <section>
           <input type="text" value={value} onChange={handleTodoChange} />
           <input type="button" value="addTodo" onClick={handleAddTodo} />
