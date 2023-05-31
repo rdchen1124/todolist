@@ -44,7 +44,8 @@ const TodoFormInput = styled.input`
 `;
 
 const CompleteButton = styled.button`
-  background-color: ${theme.color_blue};
+  background-color: ${(props) =>
+    props.isDone ? `${theme.color_gray}` : `${theme.color_blue}`};
   padding: 0.3rem 0.6rem;
   display: inline-block;
   color: white;
@@ -52,7 +53,6 @@ const CompleteButton = styled.button`
   border-radius: 5px;
   cursor: pointer;
   font-size: 1.2rem;
-  ${(props) => props.isDone && `background-color: ${theme.color_red}`}
 `;
 
 const DeleteButton = styled(CompleteButton)`
@@ -220,6 +220,7 @@ function App() {
                 <TodoContent>{todo}</TodoContent>
                 <TodoButtons>
                   <CompleteButton
+                    isDone={isDone}
                     onClick={() => {
                       handleTodoIsDone(id);
                     }}
