@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
-import { useState, useRef, useContext, createContext } from "react";
+import { useState, useRef, useContext, createContext, useEffect } from "react";
+import { getTodoApp, setTodoApp } from "../utils";
 const theme = {
   color_blue: "#008cba",
   color_red: "#f44336",
@@ -190,6 +191,17 @@ function App() {
       return todoList;
     }
   };
+  useEffect(() => {
+    let data = JSON.parse(getTodoApp());
+    if (data.length > 0) {
+      id.current = data[0].id + 1;
+    }
+    setTodoList(data);
+  }, []);
+
+  useEffect(() => {
+    setTodoApp(todoList);
+  }, [todoList]);
   return (
     <Container>
       <TodoListWrapper>
