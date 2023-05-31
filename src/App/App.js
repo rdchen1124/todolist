@@ -113,6 +113,8 @@ const TodoItem = styled.div`
 
 const TodoContent = styled.div`
   font-size: 1.2rem;
+  color: ${(props) => (props.isDone ? "gray" : "black")};
+  ${(props) => props.isDone && "text-decoration: line-through;"}
 `;
 
 const TodoButtons = styled.div``;
@@ -217,7 +219,7 @@ function App() {
           {todoList.length > 0 &&
             filteredTodoList().map(({ todo, id, isDone }) => (
               <TodoItem key={id}>
-                <TodoContent>{todo}</TodoContent>
+                <TodoContent isDone={isDone}>{todo}</TodoContent>
                 <TodoButtons>
                   <CompleteButton
                     isDone={isDone}
