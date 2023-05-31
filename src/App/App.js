@@ -17,8 +17,9 @@ const Container = styled.div`
 const TodoListWrapper = styled.div`
   position: relative;
   min-width: 360px;
+  max-height: 60vh;
   box-sizing: border-box;
-  padding: 30px 15px;
+  padding: 20px 15px;
   background-color: white;
 `;
 
@@ -31,7 +32,6 @@ const Header = styled.div`
 `;
 
 const TodoForm = styled.div`
-  border: 1px solid red;
   padding: 1rem;
   display: inline-flex;
 `;
@@ -79,12 +79,35 @@ const OutlineDeleteButton = styled(OutlineAddButton)`
   }
 `;
 
+const FilterWrapper = styled.div`
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const FilterItem = styled.div`
-  padding: 1rem 2rem;
-  border: ${(props) => (props.$active ? "1px solid salmon" : "")};
+  padding: 0.5rem 1rem;
+  border: ${(props) =>
+    props.$active ? "1px solid salmon" : "1px solid white"};
   color: black;
+  margin-left: 10px;
   &:hover {
     color: red;
+  }
+`;
+const TodoItemsWrapper = styled.div`
+  margin: 0 auto;
+  height: 35vh;
+  overflow-y: auto;
+`;
+
+const TodoItem = styled.div`
+  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  & + & {
+    margin-top: 0.5rem;
   }
 `;
 
@@ -175,39 +198,39 @@ function App() {
           </OutlineDeleteButton>
           {/* todo form */}
         </TodoForm>
-        <section>
+        <FilterWrapper>
           <FilterContext.Provider value={{ filter, setFilter }}>
             <Filter filter_name="all" />
             <Filter filter_name="completed" />
             <Filter filter_name="uncompleted" />
           </FilterContext.Provider>
           {/* filter */}
-        </section>
+        </FilterWrapper>
         <hr />
-        <section>
+        <TodoItemsWrapper>
           {todoList.length > 0 &&
             filteredTodoList().map(({ todo, id, isDone }) => (
-              <section key={id}>
+              <TodoItem key={id}>
                 <div>{todo}</div>
                 <div>
-                  <input
-                    type="button"
-                    value="刪除"
-                    onClick={() => {
-                      handleDeleteOne(id);
-                    }}
-                  />
-                  <input
-                    type="button"
-                    value={isDone ? "未完成" : "已完成"}
+                  <CompleteButton
                     onClick={() => {
                       handleTodoIsDone(id);
                     }}
-                  />
+                  >
+                    {isDone ? "未完成" : "已完成"}
+                  </CompleteButton>
+                  <DeleteButton
+                    onClick={() => {
+                      handleDeleteOne(id);
+                    }}
+                  >
+                    刪除
+                  </DeleteButton>
                 </div>
-              </section>
+              </TodoItem>
             ))}
-        </section>
+        </TodoItemsWrapper>
       </TodoListWrapper>
     </Container>
   );
