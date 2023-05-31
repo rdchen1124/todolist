@@ -111,6 +111,12 @@ const TodoItem = styled.div`
   }
 `;
 
+const TodoContent = styled.div`
+  font-size: 1.2rem;
+`;
+
+const TodoButtons = styled.div``;
+
 const FilterContext = createContext(null);
 
 const Filter = ({ filter_name }) => {
@@ -211,8 +217,8 @@ function App() {
           {todoList.length > 0 &&
             filteredTodoList().map(({ todo, id, isDone }) => (
               <TodoItem key={id}>
-                <div>{todo}</div>
-                <div>
+                <TodoContent>{todo}</TodoContent>
+                <TodoButtons>
                   <CompleteButton
                     onClick={() => {
                       handleTodoIsDone(id);
@@ -227,7 +233,7 @@ function App() {
                   >
                     刪除
                   </DeleteButton>
-                </div>
+                </TodoButtons>
               </TodoItem>
             ))}
         </TodoItemsWrapper>
