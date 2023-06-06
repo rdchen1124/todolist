@@ -1,12 +1,9 @@
 import styled from "@emotion/styled";
 import { useState, useRef, useContext, createContext, useEffect } from "react";
 import { getTodoApp, setTodoApp } from "../utils";
-import {
-  CompleteButton,
-  DeleteButton,
-  OutlineAddButton,
-  OutlineDeleteButton,
-} from "../Buttons";
+import { CompleteButton, DeleteButton } from "../Buttons";
+import TodoForm from "../TodoForm";
+
 const theme = {
   color_blue: "#008cba",
   color_red: "#f44336",
@@ -37,18 +34,6 @@ const Header = styled.div`
   color: ${theme.color_blue};
   margin: 1rem auto;
   text-align: center;
-`;
-
-const TodoForm = styled.div`
-  padding: 1rem;
-  display: inline-flex;
-`;
-
-const TodoFormInput = styled.input`
-  font-size: 1.2rem;
-  padding: 0.3rem 0.6rem;
-  margin-right: 1rem;
-  display: inline-flex;
 `;
 
 const FilterWrapper = styled.div`
@@ -182,19 +167,13 @@ function App() {
     <Container>
       <TodoListWrapper>
         <Header>Todo List in React</Header>
-        <TodoForm>
-          <TodoFormInput
-            type="text"
-            placeholder="new todo..."
-            value={value}
-            onChange={handleTodoChange}
-          />
-          <OutlineAddButton onClick={handleAddTodo}>addTodo</OutlineAddButton>
-          <OutlineDeleteButton onClick={handleDeleteAll}>
-            deleteAll
-          </OutlineDeleteButton>
-          {/* todo form */}
-        </TodoForm>
+        {/* todo form */}
+        <TodoForm
+          todo={value}
+          onTodoChange={handleTodoChange}
+          onAddTodo={handleAddTodo}
+          onDeleteAll={handleDeleteAll}
+        />
         <FilterWrapper>
           <FilterContext.Provider value={{ filter, setFilter }}>
             <Filter filter_name="all" />
