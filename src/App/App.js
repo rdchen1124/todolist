@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { ThemeProvider } from "@emotion/react";
 import { useState, useRef, createContext, useEffect } from "react";
 import { getTodoApp, setTodoApp } from "../utils";
 import FilterGroup from "../FilterGroup";
@@ -6,10 +7,14 @@ import TodoForm from "../TodoForm";
 import TodoList from "../TodoList";
 
 const theme = {
-  color_blue: "#008cba",
-  color_red: "#f44336",
-  color_gray: "rgba(0, 0, 0, 0.3)",
-  color_orange: "#ffc20052",
+  colors: {
+    primary: "#008cba",
+    danger: "#f44336",
+    secondary: "rgba(0, 0, 0, 0.3)",
+    warning: "#ffc20052",
+    dark: "black",
+    light: "white",
+  },
 };
 
 const Container = styled.div`
@@ -32,7 +37,7 @@ const TodoListWrapper = styled.div`
 const Header = styled.div`
   font-size: 2rem;
   font-weight: bold;
-  color: ${theme.color_blue};
+  color: ${({ theme }) => theme.colors.primary};
   margin: 1rem auto;
   text-align: center;
 `;
@@ -107,29 +112,31 @@ function App() {
   }, [todoList]);
 
   return (
-    <Container>
-      <TodoListWrapper>
-        <Header>Todo List in React</Header>
-        {/* todo form */}
-        <TodoForm
-          todo={value}
-          onTodoChange={handleTodoChange}
-          onAddTodo={handleAddTodo}
-          onDeleteAll={handleDeleteAll}
-        />
-        {/* filter */}
-        <FilterContext.Provider value={{ filter, setFilter }}>
-          <FilterGroup />
-        </FilterContext.Provider>
-        <hr />
-        {/* todo List */}
-        <TodoList
-          todoList={filteredTodoList()}
-          onTodoIsDone={handleTodoIsDone}
-          onDeleteTodo={handleDeleteOne}
-        />
-      </TodoListWrapper>
-    </Container>
+    <ThemeProvider theme={theme}>
+      <Container>
+        <TodoListWrapper>
+          <Header>Todo List in React</Header>
+          {/* todo form */}
+          <TodoForm
+            todo={value}
+            onTodoChange={handleTodoChange}
+            onAddTodo={handleAddTodo}
+            onDeleteAll={handleDeleteAll}
+          />
+          {/* filter */}
+          <FilterContext.Provider value={{ filter, setFilter }}>
+            <FilterGroup />
+          </FilterContext.Provider>
+          <hr />
+          {/* todo List */}
+          <TodoList
+            todoList={filteredTodoList()}
+            onTodoIsDone={handleTodoIsDone}
+            onDeleteTodo={handleDeleteOne}
+          />
+        </TodoListWrapper>
+      </Container>
+    </ThemeProvider>
   );
 }
 

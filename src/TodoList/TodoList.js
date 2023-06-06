@@ -1,13 +1,6 @@
 import styled from "@emotion/styled";
 import { CompleteButton, DeleteButton } from "../Buttons";
 
-const theme = {
-  color_blue: "#008cba",
-  color_red: "#f44336",
-  color_gray: "rgba(0, 0, 0, 0.3)",
-  color_orange: "#ffc20052",
-};
-
 const TodoListWrapper = styled.div`
   margin: 0 auto;
   height: 35vh;
@@ -24,14 +17,15 @@ const TodoItem = styled.div`
   }
   transition: all 0.2s ease;
   &:hover {
-    background: ${theme.color_orange};
+    background: ${({ theme }) => theme.colors.warning};
   }
 `;
 
 const TodoContent = styled.div`
   font-size: 1.2rem;
-  color: ${(props) => (props.isDone ? "gray" : "black")};
-  ${(props) => props.isDone && "text-decoration: line-through;"}
+  color: ${({ theme, isDone }) =>
+    isDone ? theme.colors.secondary : theme.colors.black};
+  ${({ isDone }) => isDone && "text-decoration: line-through;"}
 `;
 
 const TodoButtons = styled.div``;

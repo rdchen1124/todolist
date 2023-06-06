@@ -1,14 +1,8 @@
 import styled from "@emotion/styled";
-const theme = {
-  color_blue: "#008cba",
-  color_red: "#f44336",
-  color_gray: "rgba(0, 0, 0, 0.3)",
-  color_orange: "#ffc20052",
-};
 
 const CompleteButton = styled.button`
-  background-color: ${(props) =>
-    props.isDone ? `${theme.color_gray}` : `${theme.color_blue}`};
+  background-color: ${({ theme, isDone }) =>
+    isDone ? `${theme.colors.secondary}` : `${theme.colors.primary}`};
   padding: 0.3rem 0.6rem;
   display: inline-block;
   color: white;
@@ -20,25 +14,25 @@ const CompleteButton = styled.button`
 
 const DeleteButton = styled(CompleteButton)`
   margin-left: 10px;
-  background-color: ${theme.color_red};
+  background-color: ${({ theme }) => theme.colors.danger};
 `;
 
 const OutlineAddButton = styled(CompleteButton)`
   background-color: white;
   color: black;
-  border: 1px solid ${theme.color_blue};
+  border: 1px solid ${({ theme }) => theme.colors.primary};
   transition: all 0.3s ease;
   &:hover {
-    background-color: ${theme.color_blue};
+    background-color: ${({ theme }) => theme.colors.primary};
     color: white;
   }
 `;
 
 const OutlineDeleteButton = styled(OutlineAddButton)`
   margin-left: 10px;
-  border: 1px solid ${theme.color_red};
+  border: 1px solid ${({ theme }) => theme.colors.danger};
   &:hover {
-    background-color: ${theme.color_red};
+    background-color: ${({ theme }) => theme.colors.danger};
   }
 `;
 

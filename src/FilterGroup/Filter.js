@@ -4,8 +4,10 @@ import { FilterContext } from "../App";
 
 const FilterItem = styled.div`
   padding: 0.5rem 1rem;
-  border: ${(props) =>
-    props.$active ? "1px solid salmon" : "1px solid white"};
+  border: ${({ theme, $active }) =>
+    $active
+      ? `1px solid ${theme.colors.danger}`
+      : `1px solid ${theme.colors.light}`};
   color: black;
   margin-left: 10px;
   &:hover {
