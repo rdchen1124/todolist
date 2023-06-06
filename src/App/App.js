@@ -106,6 +106,7 @@ const TodoItemsWrapper = styled.div`
 
 const TodoItem = styled.div`
   padding: 0.5rem 1rem;
+  border-radius: 1rem;
   display: flex;
   justify-content: space-between;
   & + & {
@@ -214,6 +215,7 @@ function App() {
         <TodoForm>
           <TodoFormInput
             type="text"
+            placeholder="new todo..."
             value={value}
             onChange={handleTodoChange}
           />
