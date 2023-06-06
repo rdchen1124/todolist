@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
 import { useState, useRef, createContext, useEffect } from "react";
 import { getTodoApp, setTodoApp } from "../utils";
-import { CompleteButton, DeleteButton } from "../Buttons";
 import FilterGroup from "../FilterGroup";
 import TodoForm from "../TodoForm";
+import TodoList from "../TodoList";
 
 const theme = {
   color_blue: "#008cba",
@@ -36,34 +36,6 @@ const Header = styled.div`
   margin: 1rem auto;
   text-align: center;
 `;
-
-const TodoItemsWrapper = styled.div`
-  margin: 0 auto;
-  height: 35vh;
-  overflow-y: auto;
-`;
-
-const TodoItem = styled.div`
-  padding: 0.5rem 1rem;
-  border-radius: 1rem;
-  display: flex;
-  justify-content: space-between;
-  & + & {
-    margin-top: 0.5rem;
-  }
-  transition: all 0.2s ease;
-  &:hover {
-    background: ${theme.color_orange};
-  }
-`;
-
-const TodoContent = styled.div`
-  font-size: 1.2rem;
-  color: ${(props) => (props.isDone ? "gray" : "black")};
-  ${(props) => props.isDone && "text-decoration: line-through;"}
-`;
-
-const TodoButtons = styled.div``;
 
 const FilterContext = createContext(null);
 
@@ -133,6 +105,7 @@ function App() {
   useEffect(() => {
     setTodoApp(todoList);
   }, [todoList]);
+
   return (
     <Container>
       <TodoListWrapper>
@@ -149,31 +122,12 @@ function App() {
           <FilterGroup />
         </FilterContext.Provider>
         <hr />
-        <TodoItemsWrapper>
-          {todoList.length > 0 &&
-            filteredTodoList().map(({ todo, id, isDone }) => (
-              <TodoItem key={id}>
-                <TodoContent isDone={isDone}>{todo}</TodoContent>
-                <TodoButtons>
-                  <CompleteButton
-                    isDone={isDone}
-                    onClick={() => {
-                      handleTodoIsDone(id);
-                    }}
-                  >
-                    {isDone ? "未完成" : "已完成"}
-                  </CompleteButton>
-                  <DeleteButton
-                    onClick={() => {
-                      handleDeleteOne(id);
-                    }}
-                  >
-                    刪除
-                  </DeleteButton>
-                </TodoButtons>
-              </TodoItem>
-            ))}
-        </TodoItemsWrapper>
+        {/* todo List */}
+        <TodoList
+          todoList={filteredTodoList()}
+          onTodoIsDone={handleTodoIsDone}
+          onDeleteTodo={handleDeleteOne}
+        />
       </TodoListWrapper>
     </Container>
   );
