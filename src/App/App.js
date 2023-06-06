@@ -1,7 +1,8 @@
 import styled from "@emotion/styled";
-import { useState, useRef, useContext, createContext, useEffect } from "react";
+import { useState, useRef, createContext, useEffect } from "react";
 import { getTodoApp, setTodoApp } from "../utils";
 import { CompleteButton, DeleteButton } from "../Buttons";
+import FilterGroup from "../FilterGroup";
 import TodoForm from "../TodoForm";
 
 const theme = {
@@ -36,23 +37,6 @@ const Header = styled.div`
   text-align: center;
 `;
 
-const FilterWrapper = styled.div`
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const FilterItem = styled.div`
-  padding: 0.5rem 1rem;
-  border: ${(props) =>
-    props.$active ? "1px solid salmon" : "1px solid white"};
-  color: black;
-  margin-left: 10px;
-  &:hover {
-    color: red;
-  }
-`;
 const TodoItemsWrapper = styled.div`
   margin: 0 auto;
   height: 35vh;
@@ -82,20 +66,6 @@ const TodoContent = styled.div`
 const TodoButtons = styled.div``;
 
 const FilterContext = createContext(null);
-
-const Filter = ({ filter_name }) => {
-  const { filter, setFilter } = useContext(FilterContext);
-  return (
-    <FilterItem
-      $active={filter_name === filter}
-      onClick={() => {
-        setFilter(filter_name);
-      }}
-    >
-      {filter_name}
-    </FilterItem>
-  );
-};
 
 function App() {
   const [value, setValue] = useState("");
@@ -174,14 +144,10 @@ function App() {
           onAddTodo={handleAddTodo}
           onDeleteAll={handleDeleteAll}
         />
-        <FilterWrapper>
-          <FilterContext.Provider value={{ filter, setFilter }}>
-            <Filter filter_name="all" />
-            <Filter filter_name="completed" />
-            <Filter filter_name="uncompleted" />
-          </FilterContext.Provider>
-          {/* filter */}
-        </FilterWrapper>
+        {/* filter */}
+        <FilterContext.Provider value={{ filter, setFilter }}>
+          <FilterGroup />
+        </FilterContext.Provider>
         <hr />
         <TodoItemsWrapper>
           {todoList.length > 0 &&
@@ -214,3 +180,4 @@ function App() {
 }
 
 export default App;
+export { FilterContext };
