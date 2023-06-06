@@ -5,6 +5,7 @@ const theme = {
   color_blue: "#008cba",
   color_red: "#f44336",
   color_gray: "rgba(0, 0, 0, 0.3)",
+  color_orange: "#ffc20052",
 };
 
 const Container = styled.div`
@@ -109,6 +110,10 @@ const TodoItem = styled.div`
   justify-content: space-between;
   & + & {
     margin-top: 0.5rem;
+  }
+  transition: all 0.2s ease;
+  &:hover {
+    background: ${theme.color_orange};
   }
 `;
 
