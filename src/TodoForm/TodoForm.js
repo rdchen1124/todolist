@@ -1,10 +1,11 @@
 import styled from "@emotion/styled";
 import { OutlineAddButton, OutlineDeleteButton } from "../Buttons";
 const TodoFormWrapper = styled.div`
-  padding: 1rem;
+  padding: 0.5rem;
   display: inline-flex;
 `;
 const TodoFormInput = styled.input`
+  height: 1.5rem;
   font-size: 1.2rem;
   padding: 0.3rem 0.6rem;
   margin-right: 1rem;
